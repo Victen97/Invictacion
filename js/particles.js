@@ -16,7 +16,7 @@ var canvas, ctx, height, width, collection = [];
 var groundLeaves = []; // Array para hojas en el suelo
 var num_drops = 30; // Reducido aún más para mejor rendimiento
 var leafCache = null; // Cache para la forma de la hoja
-var leafColors = ['#B2663E', '#D4976B', '#C97D4A', '#A85A3B', '#8B4513']; // Colores predefinidos
+var leafColors = ['#A0521D', '#FF9933', '#E85C1A', '#8B2C00', '#5C2E00']; // Colores más saturados
 var gravity = 1;
 var windforce = 0;
 var windmultiplier = 0.007;
@@ -87,6 +87,12 @@ Drop.prototype = {
 
 function draw_frame() {
   ctx.clearRect(0, 0, width, height);
+  // Fondo de prueba para resaltar partículas
+  ctx.save();
+  ctx.globalAlpha = 0.85;
+  ctx.fillStyle = '#f5e6d0'; // Color claro cálido, puedes ajustar el tono
+  ctx.fillRect(0, 0, width, height);
+  ctx.restore();
   
   // Dibujar hojas en el suelo primero (por debajo de las que caen)
   groundLeaves.forEach(function (leaf) {

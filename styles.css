@@ -396,7 +396,8 @@
     }
     
     .countdown .section-title {
-      color: var(--primary); /* Título con color original */
+      color: #B2663E;
+      z-index: 9999;
     }
     
     .count-grid { display:flex; gap:14px; justify-content:center; flex-wrap: wrap; }
