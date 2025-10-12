@@ -6,9 +6,9 @@
       --muted: #7B6362;   /* malva/marrón suave para textos secundarios */
       --bg: #faf7f5;
 
-      /* NUEVOS TONOS CÁLIDOS */
-      --warm1: #D2A566; /* dorado cálido */
-      --warm2: #BFA471; /* caqui suave */
+    /* NUEVOS TONOS CÁLIDOS */
+    --warm1: #D2A566; /* dorado cálido */
+    --warm2: #BFA471; /* caqui suave */
 
       /* DECOR IRREGULAR (SVG editables) */
     }
@@ -162,108 +162,89 @@
       margin-bottom: 10px;
     }
 
-    /* TIMELINE - DISEÑO RENOVADO */
+    /* TIMELINE - DISEÑO SIMPLE Y ELEGANTE */
     .timeline { 
       padding: 80px 0; 
-      background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
+      background: linear-gradient(135deg, #f4f1ed 0%, #ede7dd 100%);
       overflow: hidden;
     }
     .timeline .container {
-      max-width: 900px;
+      max-width: 700px;
       margin: 0 auto;
       padding: 0 20px;
     }
-    .timeline-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
+    
+    .timeline-simple {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
       position: relative;
     }
     
-    /* Cada evento es una tarjeta independiente */
-    .event {
-      background: #fff;
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      border: 1px solid rgba(178,102,62,0.12);
-      position: relative;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .event:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-    }
-    
-    /* Número de orden decorativo */
-    .event::before {
-      content: counter(timeline-counter);
-      counter-increment: timeline-counter;
+    /* Línea vertical decorativa */
+    .timeline-simple::before {
+      content: '';
       position: absolute;
-      top: -12px;
-      right: 16px;
-      width: 32px;
-      height: 32px;
-      background: var(--primary);
-      color: #fff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 12px rgba(178,102,62,0.3);
+      left: 120px;
+      top: 20px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--warm1));
+      border-radius: 1px;
+      opacity: 0.3;
     }
     
-    /* Reset del contador */
-    .timeline-grid {
-      counter-reset: timeline-counter;
-    }
-    
-    /* Layout interno de cada evento */
-    .event-content {
-      display: flex;
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 40px;
       align-items: flex-start;
-      gap: 16px;
-    }
-    .event-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, var(--primary), var(--warm1));
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(178,102,62,0.2);
-    }
-    .event-icon img {
-      width: 24px;
-      height: 24px;
-      filter: brightness(0) invert(1);
+      position: relative;
+      margin-bottom: 40px;
     }
     
-    .event-details {
-      flex: 1;
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 120px;
+      top: 8px;
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 2px 8px rgba(178,102,62,0.3);
+      z-index: 1;
     }
-    .event-time {
-      font-size: 1.4rem;
+    
+    .time {
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--primary);
-      margin: 0 0 6px 0;
-      line-height: 1.2;
+      text-align: right;
+      font-family: 'Great Vibes', cursive;
+      margin-top: 4px;
+      padding-right: 20px;
     }
-    .event-title {
-      font-size: 1.1rem;
+    
+    .timeline-content {
+      padding-left: 20px;
+    }
+    
+    .timeline-item h3 {
+      font-size: 1.2rem;
       font-weight: 600;
       color: var(--dark);
-      margin: 0 0 4px 0;
+      margin: 0 0 8px 0;
+      line-height: 1.3;
     }
-    .event-description {
+    
+    .timeline-item p {
       font-size: 0.95rem;
       color: var(--muted);
       margin: 0;
-      line-height: 1.4;
+      line-height: 1.5;
+      font-style: italic;
     }
 
     /* MEMORIES (fotos y texto) */
@@ -326,10 +307,11 @@
     /* DETAILS (vestimenta e info útil) */
     .details {
       padding: 50px 0 100px 0; 
+      background: linear-gradient(180deg, #efebe6 0%, #e6ddd2 100%);
       overflow: hidden; /* Evita que el patrón se salga */
     }
-    .details-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    .detail-card { background:#fafafa; border-radius: 14px; padding: 18px; box-shadow:0 8px 20px rgba(0,0,0,0.05); }
+    .details-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .detail-card { background: linear-gradient(145deg, #f6f3ef 0%, #ede6dc 100%); border-radius: 14px; padding: 18px; box-shadow:0 8px 20px rgba(0,0,0,0.05); }
     .detail-card h4 { margin: 6px 0 10px; color: var(--primary); }
     .detail-icon { font-size: 22px; }
     .detail-card p, .detail-card li { color: var(--muted); margin: 6px 0; }
@@ -337,7 +319,7 @@
     /* RSVP */
     .rsvp { 
       padding: 50px 0; 
-      background: linear-gradient(180deg, #ffffff 0%, #faf1e3 100%); 
+      background: linear-gradient(180deg, #f2eeea 0%, #e8dfd4 100%); 
       position: relative;
       overflow: hidden; /* Evita que los elementos decorativos se salgan */
     }
@@ -346,7 +328,7 @@
     }
     .rsvp::before { top: -10px; left: -10px; transform: rotate(8deg); }
     .rsvp::after { bottom: -10px; right: -10px; transform: rotate(-12deg); }
-    .rsvp .card { border: 1px solid #e9ecea; background: #fff; backdrop-filter: blur(2px); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 760px; margin: 0 auto; }
+    .rsvp .card { border: 1px solid #e9ecea; background: linear-gradient(145deg, #f6f3ef 0%, #ede6dc 100%); backdrop-filter: blur(2px); border-radius: 16px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 760px; margin: 0 auto; }
     .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
     .form-grid .full { grid-column: 1 / -1; }
     label { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; display: block; }
@@ -364,7 +346,7 @@
     .helper { color: var(--muted); font-size: 0.9rem; }
 
     /* LOCATION */
-    .location { background: #fff; padding: 50px 0; }
+    .location { background: linear-gradient(180deg, #f2eeea 0%, #eae3d8 100%); padding: 50px 0; }
     .map-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
     .map-card { background: #fafafa; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
     .map-body { padding: 16px; }
@@ -374,7 +356,7 @@
     /* COUNTDOWN */
     .countdown { 
       padding: 50px 0; 
-      background: #fff; /* Fondo blanco original */
+      background: linear-gradient(145deg, #f6f3ef 0%, #ede6dc 100%); /* Fondo nude/beige sutil */
       position: relative;
       overflow: hidden;
     }
@@ -437,36 +419,32 @@
       .timeline { padding: 60px 0; }
 
       /* Timeline responsivo */
-      .timeline-grid { 
-        grid-template-columns: 1fr; 
-        gap: 20px;
+      .timeline-simple::before {
+        left: 80px;
       }
-      .event {
-        padding: 20px;
+      .timeline-item {
+        grid-template-columns: 80px 1fr;
+        gap: 30px;
       }
-      .event-content {
-        gap: 12px;
+      .timeline-item::before {
+        left: 80px;
       }
-      .event-icon {
-        width: 40px;
-        height: 40px;
+      .time {
+        font-size: 1.1rem;
+        padding-right: 15px;
       }
-      .event-icon img {
-        width: 20px;
-        height: 20px;
+      .timeline-item h3 {
+        font-size: 1.1rem;
       }
-      .event-time {
-        font-size: 1.2rem;
-      }
-      .event-title {
-        font-size: 1rem;
-      }
-      .event-description {
+      .timeline-item p {
         font-size: 0.9rem;
       }
 
       /* Galería y mapas más compactos */
       .map-card iframe { height: 240px; }
+      
+      /* En tablets mantener 2 columnas para detalles */
+      .details-grid { grid-template-columns: repeat(2, 1fr); }
 
       .nav-links { flex-wrap: wrap; gap: 8px; }
       .info { flex-direction: column; }
@@ -501,32 +479,27 @@
       .hero h1 { font-size: 3.2rem; }
       .hero::before { font-size: clamp(3.2rem, 22vw, 8rem); }
 
-      .timeline-grid {
-        gap: 16px;
+      .timeline-simple {
+        gap: 20px;
       }
-      .event {
-        padding: 16px;
+      .timeline-simple::before {
+        left: 70px;
       }
-      .event::before {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
-        top: -10px;
-        right: 12px;
+      .timeline-item {
+        grid-template-columns: 70px 1fr;
+        gap: 20px;
       }
-      .event-content {
-        gap: 10px;
+      .timeline-item::before {
+        left: 70px;
+        width: 16px;
+        height: 16px;
       }
-      .event-icon {
-        width: 36px;
-        height: 36px;
+      .time {
+        font-size: 1rem;
+        padding-right: 10px;
       }
-      .event-icon img {
-        width: 18px;
-        height: 18px;
-      }
-      .event-time {
-        font-size: 1.1rem;
+      .timeline-item h3 {
+        font-size: 1rem;
       }
 
       .count-box { width: 96px; padding: 12px; }
@@ -541,7 +514,7 @@
     }
 
     /* FORM ENHANCEMENTS (RSVP) - Labels estáticos mejorados */
-    .rsvp .card { border: 1px solid #e9ecea; background: #fff; backdrop-filter: blur(2px); }
+    .rsvp .card { border: 1px solid #e9ecea; background: linear-gradient(145deg, #f6f3ef 0%, #ede6dc 100%); backdrop-filter: blur(2px); }
     .form-grid { gap: 18px; }
     .field { position: relative; margin-bottom: 20px; }
     
@@ -576,7 +549,7 @@
       padding: 12px 12px 12px 40px; 
       border: 1px solid #e1e1e1; 
       border-radius: 12px; 
-      background: #fff; 
+      background: #f8f5f1; 
       font-size: 0.95rem;
       transition: border-color .2s ease, box-shadow .2s ease;
       box-sizing: border-box;

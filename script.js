@@ -104,7 +104,7 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 
   // Countdown (ajusta la fecha/hora del evento)
-  const target = new Date('2025-11-08T15:00:00');
+  const target = new Date('2025-11-15T15:00:00');
   function tick() {
     const now = new Date();
     let diff = Math.max(0, target - now);
