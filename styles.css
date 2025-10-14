@@ -11,18 +11,54 @@
     --warm2: #BFA471; /* caqui suave */
 
       /* DECOR IRREGULAR (SVG editables) */
+      
+      /* Forzar tema claro - bloquear modo oscuro del navegador */
+      color-scheme: light only;
     }
-    html { scroll-behavior: smooth; }
+    
+    /* Forzar colores específicos sin importar el tema del sistema */
+    * {
+      color-scheme: light !important;
+    }
+    html { 
+      scroll-behavior: smooth;
+      color-scheme: light !important; /* Forzar tema claro */
+    }
     body {
       margin: 0;
       font-family: 'Open Sans', sans-serif;
-      background: var(--bg);
-      color: var(--dark);
+      background: var(--bg) !important;
+      color: var(--dark) !important;
       overflow-x: hidden; /* Evita scroll horizontal */
+      color-scheme: light !important; /* Forzar tema claro */
     }
     
     * {
       box-sizing: border-box; /* Asegura que padding y border se incluyan en width */
+      color-scheme: light !important; /* Forzar tema claro en todos los elementos */
+    }
+    
+    /* Bloquear modo oscuro específicamente */
+    @media (prefers-color-scheme: dark) {
+      :root, html, body {
+        color-scheme: light !important;
+        background: var(--bg) !important;
+        color: var(--dark) !important;
+      }
+      
+      /* Forzar colores específicos en elementos principales */
+      .section-title, h1, h2, h3, h4, h5, h6 {
+        color: var(--primary) !important;
+      }
+      
+      p, span, div {
+        color: var(--dark) !important;
+      }
+      
+      /* Mantener fondos originales */
+      section, .container, .card {
+        background: inherit !important;
+      }
     }
 
     /* NAVBAR */
