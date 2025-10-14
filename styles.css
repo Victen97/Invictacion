@@ -433,12 +433,24 @@
 
     /* RESPONSIVE */
     @media (max-width: 1000px) {
-      .memories-wrap { grid-template-columns: 1fr; }
-      .masonry { column-count: 2; }
+      .memories-wrap { 
+        grid-template-columns: 1fr; 
+        gap: 30px;
+      }
+      .masonry { column-count: 2; column-gap: 10px; }
     }
     @media (max-width: 900px) {
       /* Otros ajustes móvil */
     }
+    
+    /* Reglas para tablets - mantener proporciones intermedias */
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .masonry figure.small { height: 140px; }
+      .masonry figure.medium { height: 170px; }
+      .masonry figure.large { height: 210px; }
+      .masonry figure.extra-large { height: 250px; }
+    }
+    
     @media (max-width: 768px) {
       /* Mostrar menú hamburguesa y usar menú desplegable */
       .menu-toggle { display: block; }
@@ -476,8 +488,23 @@
        .form-grid { grid-template-columns: 1fr; }
        .map-grid { grid-template-columns: 1fr; }
        .details-grid { grid-template-columns: 1fr; }
-       .masonry { column-count: 1; }
-       .masonry figure { height: 250px; } /* Altura ajustada para móvil */
+       
+       /* Mantener 2 columnas en móvil para las imágenes */
+       .memories-wrap { 
+         grid-template-columns: 1fr; 
+         gap: 20px;
+       }
+       .masonry { 
+         column-count: 2; 
+         column-gap: 8px; 
+       }
+       
+       /* Mantener proporciones de desktop pero ajustadas para móvil */
+       .masonry figure { height: 180px; } /* Altura por defecto más pequeña */
+       .masonry figure.small { height: 140px; } /* Reducido de 150px */
+       .masonry figure.medium { height: 160px; } /* Reducido de 200px */
+       .masonry figure.large { height: 200px; } /* Reducido de 250px */
+       .masonry figure.extra-large { height: 230px; } /* Reducido de 300px */
 
        /* Menu colapsable */
        .nav-links {
@@ -518,6 +545,16 @@
       .timeline-item h3 {
         font-size: 1rem;
       }
+
+      /* Ajustar imágenes para pantallas muy pequeñas */
+      .masonry { 
+        column-gap: 6px; 
+      }
+      .masonry figure { height: 160px; } 
+      .masonry figure.small { height: 120px; }
+      .masonry figure.medium { height: 140px; }
+      .masonry figure.large { height: 170px; }
+      .masonry figure.extra-large { height: 200px; }
 
       .count-box { width: 96px; padding: 12px; }
       .map-card iframe { height: 220px; }
