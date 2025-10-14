@@ -10,6 +10,10 @@ window.addEventListener('DOMContentLoaded', function() {
         if (section === 'hero') {
           updateHeroH1();
         }
+        // Initialize flip cards after loading memories section
+        if (section === 'memories') {
+          initializeFlipCards();
+        }
       })
       .catch(error => console.error(`Error loading ${section}:`, error));
   });
@@ -28,6 +32,28 @@ window.addEventListener('DOMContentLoaded', function() {
 
   // Update on resize
   window.addEventListener('resize', updateHeroH1);
+
+  // Initialize flip cards functionality
+  function initializeFlipCards() {
+    const flipCards = document.querySelectorAll('.flip-card');
+    flipCards.forEach(card => {
+      card.addEventListener('click', function() {
+        // Si esta tarjeta ya está volteada, solo la devolvemos
+        if (this.classList.contains('flipped')) {
+          this.classList.remove('flipped');
+        } else {
+          // Devolver todas las demás tarjetas a su estado normal
+          flipCards.forEach(otherCard => {
+            if (otherCard !== this) {
+              otherCard.classList.remove('flipped');
+            }
+          });
+          // Voltear esta tarjeta
+          this.classList.add('flipped');
+        }
+      });
+    });
+  }
 
   // Galería removida - Swiper ya no necesario
   // const swiper = new Swiper('.swiper', {
