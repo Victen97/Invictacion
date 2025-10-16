@@ -227,7 +227,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('png/follaje-seco-colocado-abajo.jpg') no-repeat center/cover;
+      background: url('png/follaje-seco-colocado-abajo.webp') no-repeat center/cover;
       z-index: 1;
       pointer-events: none;
     }
