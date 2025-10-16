@@ -14,6 +14,10 @@ window.addEventListener('DOMContentLoaded', function() {
         if (section === 'memories') {
           initializeFlipCards();
         }
+        // Initialize RSVP functionality after loading rsvp section
+        if (section === 'rsvp') {
+          initializeRSVP();
+        }
       })
       .catch(error => console.error(`Error loading ${section}:`, error));
   });
@@ -274,4 +278,166 @@ window.addEventListener('DOMContentLoaded', function() {
       field.classList.remove('invalid');
     });
   }, { capture: true });
+
+  // Funcionalidad RSVP avanzada
+  function initializeRSVP() {
+    // Variables globales para RSVP
+    let maxGuests = 1; // Por defecto 1 invitado
+    let currentGuests = [];
+
+    // Leer parámetro de URL para número máximo de invitados
+    const urlParams = new URLSearchParams(window.location.search);
+    const invParam = urlParams.get('inv');
+    if (invParam && !isNaN(invParam) && parseInt(invParam) > 0) {
+      maxGuests = parseInt(invParam);
+    }
+
+    // Elementos del DOM
+    const guestLimitInfo = document.getElementById('guestLimitInfo');
+    const availableGuestsSpan = document.getElementById('availableGuests');
+    const guestNameInput = document.getElementById('guestName');
+    const addGuestBtn = document.getElementById('addGuestBtn');
+    const guestsTable = document.getElementById('guestsTable');
+    const guestsTableBody = document.getElementById('guestsTableBody');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Mostrar información de límite de invitados
+    if (maxGuests > 1) {
+      guestLimitInfo.style.display = 'block';
+      updateAvailableGuests();
+    }
+
+    // Función para actualizar contador de invitados disponibles
+    function updateAvailableGuests() {
+      const remaining = maxGuests - currentGuests.length;
+      availableGuestsSpan.textContent = remaining;
+      
+      // Deshabilitar botón si se alcanzó el límite
+      addGuestBtn.disabled = remaining <= 0;
+      
+      // Habilitar/deshabilitar submit según si hay invitados
+      submitBtn.disabled = currentGuests.length === 0;
+    }
+
+    // Función para agregar invitado
+    function addGuest() {
+      const name = guestNameInput.value.trim();
+      
+      if (!name) {
+        alert('Por favor ingresa un nombre');
+        return;
+      }
+
+      if (currentGuests.length >= maxGuests) {
+        alert(`Solo puedes agregar hasta ${maxGuests} invitado(s)`);
+        return;
+      }
+
+      if (currentGuests.some(guest => guest.toLowerCase() === name.toLowerCase())) {
+        alert('Este nombre ya fue agregado');
+        return;
+      }
+
+      // Agregar a la lista
+      currentGuests.push(name);
+      
+      // Limpiar input
+      guestNameInput.value = '';
+      
+      // Actualizar tabla
+      updateGuestsTable();
+      
+      // Actualizar contador
+      updateAvailableGuests();
+    }
+
+    // Función para remover invitado
+    function removeGuest(index) {
+      currentGuests.splice(index, 1);
+      updateGuestsTable();
+      updateAvailableGuests();
+    }
+
+    // Función para actualizar tabla de invitados
+    function updateGuestsTable() {
+      // Mostrar/ocultar tabla
+      guestsTable.style.display = currentGuests.length > 0 ? 'block' : 'none';
+      
+      // Limpiar tabla
+      guestsTableBody.innerHTML = '';
+      
+      // Agregar filas
+      currentGuests.forEach((guest, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${guest}</td>
+          <td>
+            <button type="button" class="btn-remove" onclick="removeGuest(${index})">
+              Eliminar
+            </button>
+          </td>
+        `;
+        guestsTableBody.appendChild(row);
+      });
+    }
+
+    // Event listeners
+    addGuestBtn.addEventListener('click', addGuest);
+    
+    guestNameInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addGuest();
+      }
+    });
+
+    // Modificar el envío del formulario para usar la nueva lista
+    const rsvpForm = document.getElementById('rsvpForm');
+    if (rsvpForm) {
+      rsvpForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (currentGuests.length === 0) {
+          alert('Debes agregar al menos un invitado');
+          return;
+        }
+
+        const whatsappNumber = this.dataset.whatsapp;
+        const message = document.getElementById('message').value.trim();
+        
+        // Crear mensaje para WhatsApp
+        let whatsappMessage = `🎉 *Confirmación de Asistencia - Boda Victor & Sidney*\n\n`;
+        whatsappMessage += `👥 *Número de personas:* ${currentGuests.length}\n\n`;
+        whatsappMessage += `👤 *Nombres de los asistentes:*\n`;
+        
+        currentGuests.forEach((guest, index) => {
+          whatsappMessage += `${index + 1}. ${guest}\n`;
+        });
+        
+        if (message) {
+          whatsappMessage += `\n💬 *Comentario adicional:*\n${message}\n\n`;
+        } else {
+          whatsappMessage += `\n`;
+        }
+        
+        whatsappMessage += `¡Nos emociona mucho celebrar con ustedes! 💕`;
+
+        // Codificar mensaje para URL
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappUrl = `https://wa.me/${whatsappNumber.replace('+', '')}?text=${encodedMessage}`;
+        
+        // Abrir WhatsApp
+        window.open(whatsappUrl, '_blank');
+        
+        // Limpiar formulario
+        currentGuests = [];
+        updateGuestsTable();
+        updateAvailableGuests();
+        document.getElementById('message').value = '';
+      });
+    }
+
+    // Hacer removeGuest accesible globalmente
+    window.removeGuest = removeGuest;
+  }
 });

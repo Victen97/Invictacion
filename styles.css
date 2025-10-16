@@ -227,7 +227,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('png/follaje-seco-colocado-abajo.webp') no-repeat center/cover;
+      background: url('png/follaje-seco-colocado-abajo-convertido-a-1920x1080.jpeg') no-repeat center/cover;
       z-index: 1;
       pointer-events: none;
     }
@@ -522,6 +522,115 @@
     textarea { min-height: 110px; resize: vertical; }
     .radio-group { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .helper { color: var(--muted); font-size: 0.9rem; }
+
+    /* RSVP - Funcionalidad avanzada */
+    .guest-limit-info {
+      background: rgba(178,102,62,0.1);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .add-guest-container {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .add-guest-container input {
+      flex: 1;
+    }
+
+    .btn-add {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      width: 45px;
+      height: 45px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add:hover {
+      background: var(--warm1);
+      transform: scale(1.05);
+    }
+
+    .btn-add:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .guests-table {
+      margin-top: 20px;
+    }
+
+    .guests-table h4 {
+      color: var(--primary);
+      margin: 0 0 15px 0;
+      font-size: 1rem;
+    }
+
+    .guests-table table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .guests-table th,
+    .guests-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    .guests-table th {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .guests-table td {
+      font-size: 0.95rem;
+    }
+
+    .guests-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .btn-remove {
+      background: #e57373;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-remove:hover {
+      background: #d32f2f;
+    }
+
+    #submitBtn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
 
     /* LOCATION */
     .location { background: linear-gradient(180deg, #f2eeea 0%, #eae3d8 100%); padding: 50px 0; }
@@ -833,4 +942,31 @@
     .radio-group.segmented label:has(input:checked) { background: var(--primary); color: #fff; border-color: var(--primary); }
 
     /* Botón en móvil */
-    @media (max-width: 768px) { .rsvp .btn { width: 100%; } }
+    @media (max-width: 768px) { 
+      .rsvp .btn { width: 100%; }
+      
+      /* RSVP responsive */
+      .add-guest-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .btn-add {
+        width: 100%;
+        height: 45px;
+      }
+      
+      .guests-table table {
+        font-size: 0.9rem;
+      }
+      
+      .guests-table th,
+      .guests-table td {
+        padding: 8px 12px;
+      }
+      
+      .btn-remove {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+      }
+    }

@@ -2,27 +2,42 @@
     <div class="container">
       <h2 class="section-title">Confirmación de asistencia</h2>
       <div class="card">
+        <div id="guestLimitInfo" class="guest-limit-info" style="display: none;">
+          <p>Invitados disponibles: <span id="availableGuests">0</span></p>
+        </div>
         <form id="rsvpForm" data-whatsapp="+50489564882">
           <div class="form-grid">
-            <div class="field" data-icon="👥">
-              <label for="guests">¿Cuántas personas asistirán? *</label>
-              <select id="guests" name="guests" required>
-                <option value="">Selecciona el número</option>
-                <option value="1">1 persona</option>
-                <option value="2">2 personas</option>
-              </select>
+            <div class="field">
+              <label for="guestName">Agregar invitado *</label>
+              <div class="add-guest-container">
+                <input type="text" id="guestName" name="guestName" placeholder="Nombre del invitado" maxlength="50">
+                <button type="button" id="addGuestBtn" class="btn-add">+</button>
+              </div>
             </div>
-            <div class="field full" data-icon="👤">
-              <label for="names">Nombres de las personas que asistirán *</label>
-              <textarea id="names" name="names" required placeholder="Escribe los nombres de quienes asistirán (uno por línea)"></textarea>
+            
+            <div class="field full">
+              <div id="guestsTable" class="guests-table" style="display: none;">
+                <h4>Invitados confirmados:</h4>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody id="guestsTableBody">
+                  </tbody>
+                </table>
+              </div>
             </div>
+            
             <div class="field full" data-icon="✍️">
               <label for="message">Comentario adicional (opcional)</label>
               <textarea id="message" name="message" placeholder="Algún comentario especial, restricciones alimentarias, etc."></textarea>
             </div>
           </div>
           <p class="helper">Al enviar se abrirá WhatsApp para confirmar tu asistencia directamente.</p>
-          <button type="submit" class="btn">Confirmar por WhatsApp</button>
+          <button type="submit" class="btn" id="submitBtn" disabled>Confirmar por WhatsApp</button>
         </form>
       </div>
     </div>
