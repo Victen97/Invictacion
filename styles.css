@@ -136,48 +136,132 @@
       height: 100vh;
       color: #333;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+    
+    .hero-row {
+      margin-bottom: 40px;
+    }
+    
+    .hero-row:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* Primera fila - Título principal */
+    .hero-top h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      color: var(--primary);
+      margin: 0 0 15px 0;
+      text-shadow: 0 2px 10px rgba(178,102,62,0.3);
+    }
+    
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--dark);
+      margin: 0;
+      font-weight: 300;
+      opacity: 0.9;
+    }
+    
+    /* Segunda fila - Fecha y acciones */
+    .hero-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    
+    .wedding-date {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .date-number {
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+    
+    .date-details {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    
+    .date-month {
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+    
+    .date-year {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted);
+      line-height: 1;
+    }
+    
+    .hero-actions .btn {
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 30px;
     }
     .hero-divider { position: absolute; left: 0; right: 0; bottom: -1px; height: 80px; background: none; pointer-events: none; z-index: 0; }
 
+    /* Imagen de fondo principal */
     .hero::before {
-      content: 'Victor & Sidney';
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(5rem, 16vw, 16rem);
-      color: var(--primary);
-      opacity: 0.06; letter-spacing: 2px;
-      z-index: 0; pointer-events: none;
-    }
-    .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: url('https://thumbs.dreamstime.com/b/paisaje-natural-oto%C3%B1al-con-cielo-claro-y-%C3%A1rbol-colorido-prado-fr%C3%ADo-helado-en-el-c%C3%A9sped-noviembre-por-la-ma%C3%B1ana-ca%C3%ADda-349055659.jpg') no-repeat center/cover;
-      filter: blur(4px);
-      -webkit-filter: blur(4px);
-      z-index: 0;
+      background: url('png/follaje-seco-colocado-abajo.jpg') no-repeat center/cover;
+      z-index: 1;
       pointer-events: none;
     }
-    .hero > * { position: relative; z-index: 1; }
-    .hero h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3rem;
-      background-color: rgba(0,0,0, 0.4);
-      color: white;
-      font-weight: bold;
-      border: 3px solid #f1f1f1;
+    
+    /* Imagen de corte de papel en la parte inferior */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: url('fotos/cortepapel4.png') no-repeat center bottom/contain;
+      background-size: 100% auto;
+      z-index: 3;
+      pointer-events: none;
+    }
+    
+    /* Texto de fondo decorativo */
+    .hero-content::before {
+      content: 'Victor & Sidney';
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(5rem, 16vw, 16rem);
+      color: var(--primary);
+      opacity: 0.06;
+      letter-spacing: 2px;
       z-index: 2;
-      width: 80%;
-      padding: 20px;
-      text-align: center;
+      pointer-events: none;
+      white-space: nowrap;
     }
-    .hero p { font-size: 1.1rem; margin-bottom: 20px; }
-    .hero .actions { margin-top: 10px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
     /* INFO SECTION (patrón: anillos entrelazados) */
     .info {
@@ -201,7 +285,7 @@
     /* TIMELINE - DISEÑO SIMPLE Y ELEGANTE */
     .timeline { 
       padding: 80px 0; 
-      background: linear-gradient(135deg, #f4f1ed 0%, #ede7dd 100%);
+      background: linear-gradient(135deg, #1a1004 0%, #d6911b 100%);
       overflow: hidden;
     }
     .timeline .container {
@@ -262,6 +346,35 @@
       overflow: hidden;
     }
     
+    /* Imagen de corte de papel en la parte superior */
+    .memories::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: url('fotos/cortepapel4.png') no-repeat center top/contain;
+      background-size: 100% auto;
+      transform: scaleY(-1);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* Imagen de corte de papel en la parte inferior */
+    .memories::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: url('fotos/cortepapel4.png') no-repeat center bottom/contain;
+      background-size: 100% auto;
+      z-index: 3;
+      pointer-events: none;
+    }
+
     /* Canvas de partículas para la sección memories */
     .memories-particles {
       position: absolute;
@@ -492,7 +605,25 @@
       .menu-toggle { display: block; }
 
       /* Ajustes de héroe y timeline en móvil */
-      .hero { padding: 90px 16px 70px; }
+      .hero { 
+        padding: 90px 16px 70px; 
+        height: auto;
+        min-height: 100vh;
+      }
+      
+      .hero-bottom {
+        flex-direction: column;
+        gap: 25px;
+      }
+      
+      .wedding-date {
+        gap: 10px;
+      }
+      
+      /* Ajustar altura de corte de papel en móvil */
+      .hero::after {
+        height: 120px;
+      }
       .timeline { padding: 60px 0; }
 
       /* Timeline responsivo */
@@ -562,7 +693,28 @@
        .nav-links a { padding: 10px 12px; border-radius: 8px; }
      }
      @media (max-width: 480px) {
-      .hero { padding: 80px 14px 60px; }
+      .hero { 
+        padding: 80px 14px 60px;
+        height: auto;
+        min-height: 100vh;
+      }
+      
+      .hero-row {
+        margin-bottom: 30px;
+      }
+      
+      .hero-bottom {
+        gap: 20px;
+      }
+      
+      .wedding-date {
+        gap: 8px;
+      }
+      
+      /* Ajustar altura de corte de papel en móviles pequeños */
+      .hero::after {
+        height: 100px;
+      }
       .hero h1 { font-size: 3.2rem; }
       .hero::before { font-size: clamp(3.2rem, 22vw, 8rem); }
 
