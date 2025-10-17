@@ -153,7 +153,7 @@ window.addEventListener('DOMContentLoaded', function() {
   setInterval(tick, 1000);
 
   // Audio player (configura tu archivo MP3 o link externo)
-  const AUDIO_SRC = ''; // Para archivo MP3 local
+  const AUDIO_SRC = 'audio/photograph (piano instrumental).mp3'; // Para archivo MP3 local
   const EXTERNAL_MUSIC_LINK = 'https://music.youtube.com/watch?v=TU_LINK_AQUI'; // Para link externo
   
   const audio = new Audio();
