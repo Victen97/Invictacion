@@ -143,7 +143,7 @@
     
     .hero-content {
       position: relative;
-      z-index: 1;
+      z-index: 10;
       width: 100%;
       max-width: 800px;
       padding: 0 20px;
@@ -158,11 +158,15 @@
     }
     
     /* Primera fila - Título principal */
+    .hero-top {
+      margin-top: -200px; /* Mueve los nombres hacia arriba */
+    }
+    
     .hero-top h1 {
       font-family: 'Great Vibes', cursive;
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(5.5rem, 8vw, 7rem);
       color: var(--primary);
-      margin: 0 0 15px 0;
+      margin: 0 0 0 0;
       text-shadow: 0 2px 10px rgba(178,102,62,0.3);
     }
     
@@ -227,7 +231,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('png/follaje-seco-colocado-abajo-convertido-a-1920x1080.jpeg') no-repeat center/cover;
+      background: url('png/follaje-seco-colocado-abajo.webp') no-repeat center/cover;
       z-index: 1;
       pointer-events: none;
     }
@@ -236,18 +240,19 @@
     .hero::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -5px;
       left: 0;
       right: 0;
-      height: 180px;
-      background: url('fotos/cortepapel4.png') no-repeat center bottom/contain;
-      background-size: 100% auto;
-      z-index: 3;
+      height: 150px;
+      background: url('fotos/cortepapel5.png') no-repeat center bottom;
+      background-size: cover;
+      z-index: 5;
       pointer-events: none;
+      opacity: 1;
     }
     
     /* Texto de fondo decorativo */
-    .hero-content::before {
+    /* .hero-content::before {
       content: 'Victor & Sidney';
       position: absolute;
       top: 50%;
@@ -261,7 +266,7 @@
       z-index: 2;
       pointer-events: none;
       white-space: nowrap;
-    }
+    } */
 
     /* INFO SECTION (patrón: anillos entrelazados) */
     .info {
@@ -315,7 +320,7 @@
       height: 80px;
       object-fit: contain;
       margin-right: 20px;
-      filter: drop-shadow(0 2px 8px rgba(178,102,62,0.2));
+      filter: brightness(0) saturate(100%) invert(44%) sepia(52%) saturate(848%) hue-rotate(12deg) brightness(95%) contrast(87%) drop-shadow(0 2px 8px rgba(178,102,62,0.3));
     }
     
     .timeline-content {
@@ -350,29 +355,31 @@
     .memories::before {
       content: '';
       position: absolute;
-      top: -150px;
+      top: -80px;
       left: 0;
       right: 0;
-      height: 180px;
-      background: url('fotos/cortepapel4.png') no-repeat center top/contain;
-      background-size: 100% auto;
+      height: 150px;
+      background: url('fotos/cortepapel5.png') no-repeat center top;
+      background-size: cover;
       transform: scaleY(-1);
-      z-index: 3;
+      z-index: 5;
       pointer-events: none;
+      opacity: 1;
     }
 
     /* Imagen de corte de papel en la parte inferior */
     .memories::after {
       content: '';
       position: absolute;
-      bottom: 0;
+      bottom: -30px;
       left: 0;
       right: 0;
-      height: 180px;
-      background: url('fotos/cortepapel4.png') no-repeat center bottom/contain;
-      background-size: 100% auto;
-      z-index: 3;
+      height: 150px;
+      background: url('fotos/cortepapel5.png') no-repeat center bottom;
+      background-size: cover;
+      z-index: 5;
       pointer-events: none;
+      opacity: 1;
     }
 
     /* Canvas de partículas para la sección memories */
@@ -386,16 +393,36 @@
       z-index: 1;
     }
     
+    /* Asegurar que el contenido esté por encima de las decoraciones */
+    .memories .container {
+      position: relative;
+      z-index: 10;
+    }
+    
+    .memories .section-title {
+      position: relative;
+      z-index: 10;
+    }
+    
     .memories-wrap { 
       display: grid; 
       grid-template-columns: 1.1fr 1fr; 
       gap: 24px; 
       align-items: start; 
       position: relative;
-      z-index: 2;
+      z-index: 10;
     }
     .story { background:rgba(255, 255, 255, 0); backdrop-filter: blur(4px); border-radius:16px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.2); }
     .story h3 { margin-top:0; color: var(--primary); }
+    .story p { 
+      font-family: 'Cormorant Garamond', serif; 
+      font-size: 1.05rem; 
+      line-height: 1.4; 
+      color: var(--dark); 
+      margin: 15px 0; 
+      font-weight: 400;
+      font-style: italic;
+    }
     .masonry { column-count: 2; column-gap: 12px; }
     .masonry figure { 
       break-inside: avoid; 
@@ -690,6 +717,39 @@
     footer { text-align: center; padding: 26px 20px; color: var(--muted); }
 
     /* RESPONSIVE */
+    
+    /* Pantallas muy grandes (1200px+) */
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 1200px;
+        padding: 0 40px;
+      }
+      
+      .hero {
+        padding: 0 40px;
+      }
+      
+      .hero-content {
+        max-width: 900px;
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+      }
+      
+      .memories-wrap {
+        gap: 30px;
+      }
+      
+      .masonry {
+        column-gap: 15px;
+      }
+      
+      .timeline .container {
+        max-width: 800px;
+      }
+    }
+    
     @media (max-width: 1000px) {
       .memories-wrap { 
         grid-template-columns: 1fr; 
@@ -707,6 +767,41 @@
       .masonry figure.medium { height: 170px; }
       .masonry figure.large { height: 210px; }
       .masonry figure.extra-large { height: 250px; }
+      
+      /* Hero ajustes para tablet */
+      .hero-bottom {
+        gap: 30px;
+      }
+      
+      /* Ajustar imágenes de papel para tablet */
+      .hero::after {
+        height: 130px;
+      }
+      
+      .memories::before {
+        height: 120px;
+        top: -60px;
+      }
+      
+      .memories::after {
+        height: 130px;
+      }
+      
+      /* Info section en tablet */
+      .info {
+        gap: 15px;
+        padding: 35px 20px;
+      }
+      
+      /* Timeline en tablet */
+      .timeline-item {
+        grid-template-columns: 85px 1fr;
+        gap: 25px;
+      }
+      .timeline-icon {
+        width: 70px;
+        height: 70px;
+      }
     }
     
     @media (max-width: 768px) {
@@ -731,7 +826,17 @@
       
       /* Ajustar altura de corte de papel en móvil */
       .hero::after {
-        height: 120px;
+        height: 100px;
+      }
+      
+      /* Ajustar imágenes de papel en memories para móvil */
+      .memories::before {
+        height: 80px;
+        top: -40px;
+      }
+      
+      .memories::after {
+        height: 100px;
       }
       .timeline { padding: 60px 0; }
 
@@ -759,11 +864,41 @@
       .details-grid { grid-template-columns: repeat(2, 1fr); }
 
       .nav-links { flex-wrap: wrap; gap: 8px; }
-      .info { flex-direction: column; }
+      
+      /* Info section responsive */
+      .info { 
+        flex-direction: column; 
+        gap: 25px;
+        padding: 30px 20px;
+      }
+      .info div {
+        margin-bottom: 15px;
+      }
+      .info h3 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+      }
       
        .form-grid { grid-template-columns: 1fr; }
        .map-grid { grid-template-columns: 1fr; }
-       .details-grid { grid-template-columns: 1fr; }
+       .details-grid { 
+         grid-template-columns: 1fr; 
+         gap: 15px;
+       }
+       
+       /* Details cards responsive */
+       .detail-card {
+         padding: 15px;
+       }
+       .detail-card h4 {
+         font-size: 1rem;
+         margin: 5px 0 8px;
+       }
+       .detail-card p,
+       .detail-card li {
+         font-size: 0.9rem;
+         line-height: 1.4;
+       }
        
        /* Mantener 2 columnas en móvil para las imágenes */
        .memories-wrap { 
@@ -782,7 +917,7 @@
        .masonry figure.large { height: 200px; } /* Reducido de 250px */
        .masonry figure.extra-large { height: 230px; } /* Reducido de 300px */
 
-       /* Menu colapsable */
+       /* Menu colapsable mejorado */
        .nav-links {
          display: none;
          position: absolute;
@@ -790,18 +925,91 @@
          left: 0;
          right: 0;
          background: rgba(255,255,255,0.98);
-         backdrop-filter: blur(6px);
+         backdrop-filter: blur(10px);
          border-bottom: 1px solid #eaeaea;
-         box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-         padding: 12px 16px;
+         box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+         padding: 15px 20px;
          flex-direction: column;
-         gap: 10px;
+         gap: 8px;
          z-index: 1001;
+         border-radius: 0 0 12px 12px;
        }
-       .nav-links.open { display: flex; }
-       .nav-links a { padding: 10px 12px; border-radius: 8px; }
+       .nav-links.open { 
+         display: flex; 
+         animation: slideDown 0.3s ease-out;
+       }
+       .nav-links a { 
+         padding: 12px 15px; 
+         border-radius: 10px;
+         transition: all 0.2s ease;
+         font-size: 1rem;
+       }
+       .nav-links a:hover {
+         background: rgba(178,102,62,0.1);
+         color: var(--primary);
+       }
+       
+       /* Animación del menú */
+       @keyframes slideDown {
+         from {
+           opacity: 0;
+           transform: translateY(-10px);
+         }
+         to {
+           opacity: 1;
+           transform: translateY(0);
+         }
+       }
      }
+     
+     /* Móviles medianos (481px - 600px) */
+     @media (max-width: 600px) and (min-width: 481px) {
+       .hero {
+         padding: 85px 16px 65px;
+       }
+       
+       .wedding-date {
+         gap: 10px;
+       }
+       
+       /* Ajustar imágenes de papel para móviles medianos */
+       .hero::after {
+         height: 120px;
+       }
+       
+       .memories::before {
+         height: 80px;
+         top: -40px;
+       }
+       
+       .memories::after {
+         height: 140px;
+       }
+       
+       .timeline-item {
+         grid-template-columns: 55px 1fr;
+         gap: 18px;
+       }
+       
+       .timeline-icon {
+         width: 50px;
+         height: 50px;
+       }
+       
+       .masonry figure { height: 150px; }
+       .masonry figure.small { height: 120px; }
+       .masonry figure.medium { height: 140px; }
+       .masonry figure.large { height: 170px; }
+       .masonry figure.extra-large { height: 190px; }
+       
+       .count-box {
+         width: 95px;
+         padding: 11px;
+       }
+     }
+     
      @media (max-width: 480px) {
+      /* Hero optimizado para móviles pequeños */
       .hero { 
         padding: 80px 14px 60px;
         height: auto;
@@ -809,52 +1017,114 @@
       }
       
       .hero-row {
-        margin-bottom: 30px;
+        margin-bottom: 25px;
       }
       
       .hero-bottom {
-        gap: 20px;
+        gap: 15px;
       }
       
       .wedding-date {
         gap: 8px;
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .date-number {
+        font-size: clamp(2.5rem, 8vw, 3.5rem);
       }
       
       /* Ajustar altura de corte de papel en móviles pequeños */
       .hero::after {
         height: 100px;
       }
-      .hero h1 { font-size: 3.2rem; }
-      .hero::before { font-size: clamp(3.2rem, 22vw, 8rem); }
-
-      .timeline-simple {
+      
+      /* Ajustar imágenes de papel en memories para móviles pequeños */
+      .memories::before {
+        height: 60px;
+        top: -30px;
+      }
+      
+      .memories::after {
+        height: 120px;
+      }
+      
+      /* Info section compacta */
+      .info {
+        padding: 25px 15px;
         gap: 20px;
       }
-      .timeline-item {
-        grid-template-columns: 60px 1fr;
+      .info h3 {
+        font-size: 1.2rem;
+      }
+      
+      /* Timeline ultra compacta */
+      .timeline {
+        padding: 40px 0;
+      }
+      .timeline-simple {
         gap: 15px;
       }
+      .timeline-item {
+        grid-template-columns: 50px 1fr;
+        gap: 12px;
+      }
       .timeline-icon {
-        width: 50px;
-        height: 50px;
-        margin-right: 5px;
+        width: 45px;
+        height: 45px;
+        margin-right: 3px;
       }
       .timeline-item h3 {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        line-height: 1.2;
+      }
+      .timeline-item p {
+        font-size: 0.85rem;
       }
 
       /* Ajustar imágenes para pantallas muy pequeñas */
       .masonry { 
-        column-gap: 6px; 
+        column-gap: 4px; 
       }
-      .masonry figure { height: 160px; } 
-      .masonry figure.small { height: 120px; }
-      .masonry figure.medium { height: 140px; }
-      .masonry figure.large { height: 170px; }
-      .masonry figure.extra-large { height: 200px; }
+      .masonry figure { height: 140px; } 
+      .masonry figure.small { height: 110px; }
+      .masonry figure.medium { height: 130px; }
+      .masonry figure.large { height: 160px; }
+      .masonry figure.extra-large { height: 180px; }
 
-      .count-box { width: 96px; padding: 12px; }
-      .map-card iframe { height: 220px; }
+      /* Cards más pequeñas */
+      .count-box { 
+        width: 90px; 
+        padding: 10px;
+        font-size: 0.9rem;
+      }
+      .count-num {
+        font-size: 1.6rem;
+      }
+      
+      .map-card iframe { 
+        height: 200px; 
+      }
+      
+      /* RSVP ajustes para móviles pequeños */
+      .guest-limit-info {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      
+      .add-guest-container input {
+        font-size: 0.9rem;
+        padding: 10px;
+      }
+      
+      .guests-table table {
+        font-size: 0.8rem;
+      }
+      
+      .guests-table th,
+      .guests-table td {
+        padding: 6px 8px;
+      }
     }
 
     /* SCROLL REVEAL */
@@ -956,13 +1226,27 @@
         height: 45px;
       }
       
+      .guests-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      
       .guests-table table {
         font-size: 0.9rem;
+        min-width: 280px;
       }
       
       .guests-table th,
       .guests-table td {
         padding: 8px 12px;
+        white-space: nowrap;
+      }
+      
+      .guests-table td:first-child {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       
       .btn-remove {
