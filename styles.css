@@ -306,7 +306,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url('png/follaje-seco-colocado-abajo.webp') no-repeat center/cover;
+      background: url('png/follaje-seco-colocado-abajo2.jpg') no-repeat center/cover;
       z-index: 1;
       pointer-events: none;
     }
@@ -813,6 +813,28 @@
     .audio-toggle { position: fixed; right: 16px; bottom: 16px; width: 46px; height: 46px; border-radius: 50%; background: var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 20px rgba(0,0,0,.15); cursor:pointer; border:none; z-index:2100; }
     .audio-toggle[aria-pressed="false"] { opacity:.9; }
     .audio-toggle:hover { filter: brightness(.96); }
+    
+    /* Audio attention animation */
+    .audio-toggle.pulse-attention {
+      animation: pulseAttention 1s ease-in-out infinite;
+    }
+    
+    @keyframes pulseAttention {
+      0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 10px 20px rgba(0,0,0,.15);
+      }
+      50% { 
+        transform: scale(1.1); 
+        box-shadow: 0 15px 30px rgba(178,102,62,0.4), 0 0 0 8px rgba(178,102,62,0.2);
+      }
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(10px); }
+      20%, 80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
 
     /* FOOTER */
     footer { text-align: center; padding: 26px 20px; color: var(--muted); }

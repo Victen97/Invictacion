@@ -1,11 +1,95 @@
 window.addEventListener('DOMContentLoaded', function() {
+  // Audio configuration - Moved to top for loading screen access
+  const AUDIO_SRC = 'audio/photograph.mp3';
+  
+  let audio = null;
+  let audioEnabled = false;
+  
+  // Función para habilitar audio después de interacción del usuario
+  function enableAudio() {
+    if (!audioEnabled && AUDIO_SRC) {
+      audio = new Audio(AUDIO_SRC);
+      audio.volume = 0.5;
+      audio.loop = true;
+      audio.preload = 'auto';
+      audioEnabled = true;
+      console.log('Audio habilitado');
+    }
+  }
+
+  // Función para mostrar notificación visual del audio
+  function showAudioNotification() {
+    const btn = document.getElementById('audioToggle');
+    if (btn) {
+      // Agregar clase de animación pulsante
+      btn.classList.add('pulse-attention');
+      
+      // Mostrar tooltip temporal
+      const tooltip = document.createElement('div');
+      tooltip.textContent = '🎵 Haz clic para escuchar música';
+      tooltip.style.cssText = `
+        position: fixed;
+        right: 70px;
+        bottom: 30px;
+        background: var(--primary);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        z-index: 10000;
+        animation: fadeInOut 4s ease-in-out;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      `;
+      
+      document.body.appendChild(tooltip);
+      
+      // Remover tooltip y animación después de 4 segundos
+      setTimeout(() => {
+        if (tooltip && tooltip.parentNode) {
+          tooltip.parentNode.removeChild(tooltip);
+        }
+        btn.classList.remove('pulse-attention');
+      }, 4000);
+    }
+  }
+
   // Loading screen functionality
   const loadingScreen = document.getElementById('loadingScreen');
   
-  // Hide loading screen after 3 seconds
+  // Hide loading screen after 3 seconds and start music
   setTimeout(function() {
     if (loadingScreen) {
       loadingScreen.classList.add('hide');
+      
+      // Start music automatically when loading screen disappears
+      setTimeout(function() {
+        // Enable audio and start playing
+        if (!audioEnabled && AUDIO_SRC) {
+          enableAudio();
+        }
+        
+        // Auto-start music after a brief delay
+        setTimeout(function() {
+          if (audio && audioEnabled) {
+            audio.play()
+              .then(() => {
+                const btn = document.getElementById('audioToggle');
+                if (btn) {
+                  btn.setAttribute('aria-pressed', 'true');
+                  btn.title = 'Pausar música';
+                  btn.querySelector('span').textContent = '⏸';
+                }
+                console.log('Música iniciada automáticamente');
+              })
+              .catch((error) => {
+                console.log('Música no se puede iniciar automáticamente - Se requiere interacción del usuario');
+                // Mostrar el botón de audio parpadeando para llamar la atención
+                showAudioNotification();
+              });
+          }
+        }, 200); // Small delay to ensure audio is ready
+      }, 300); // Start music during the transition
+      
       // Remove from DOM after transition completes
       setTimeout(function() {
         if (loadingScreen && loadingScreen.parentNode) {
@@ -168,36 +252,8 @@ window.addEventListener('DOMContentLoaded', function() {
   tick();
   setInterval(tick, 1000);
 
-  // Audio player - Configuración mejorada
-  const AUDIO_SRC = 'audio/photograph.mp3'; // Nombre simplificado
-  const EXTERNAL_MUSIC_LINK = 'https://music.youtube.com/watch?v=TU_LINK_AQUI';
-  
-  let audio = null;
-  let audioEnabled = false;
+  // Audio player setup - Get button reference
   const btn = document.getElementById('audioToggle');
-  
-  // Función para habilitar audio después de interacción del usuario
-  function enableAudio() {
-    if (!audioEnabled && AUDIO_SRC) {
-      audio = new Audio(AUDIO_SRC);
-      audio.volume = 0.5;
-      audio.loop = true;
-      audio.preload = 'auto';
-      audioEnabled = true;
-      
-      // Remover listeners después de la primera interacción
-      document.removeEventListener('click', enableAudio);
-      document.removeEventListener('touchstart', enableAudio);
-      document.removeEventListener('keydown', enableAudio);
-      
-      console.log('Audio habilitado');
-    }
-  }
-  
-  // Agregar listeners para habilitar audio en primera interacción
-  document.addEventListener('click', enableAudio);
-  document.addEventListener('touchstart', enableAudio);
-  document.addEventListener('keydown', enableAudio);
   
   if (AUDIO_SRC && btn) {
     btn.hidden = false;
@@ -235,13 +291,6 @@ window.addEventListener('DOMContentLoaded', function() {
         btn.querySelector('span').textContent = '♫';
         console.log('Audio pausado');
       }
-    });
-  } else if (EXTERNAL_MUSIC_LINK) {
-    // Modo link externo
-    btn.hidden = false;
-    btn.title = 'Escuchar nuestra canción';
-    btn.addEventListener('click', () => {
-      window.open(EXTERNAL_MUSIC_LINK, '_blank');
     });
   } else {
     // Sin música configurada
