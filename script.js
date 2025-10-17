@@ -26,20 +26,7 @@ window.addEventListener('DOMContentLoaded', function() {
       
       // Mostrar tooltip temporal
       const tooltip = document.createElement('div');
-      tooltip.textContent = '🎵 Haz clic para escuchar música';
-      tooltip.style.cssText = `
-        position: fixed;
-        right: 70px;
-        bottom: 30px;
-        background: var(--primary);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        z-index: 10000;
-        animation: fadeInOut 4s ease-in-out;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      `;
+
       
       document.body.appendChild(tooltip);
       
@@ -77,7 +64,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 if (btn) {
                   btn.setAttribute('aria-pressed', 'true');
                   btn.title = 'Pausar música';
-                  btn.querySelector('span').textContent = '⏸';
+                  btn.querySelector('span').innerHTML = '<i class="fas fa-pause"></i>';
                 }
                 console.log('Música iniciada automáticamente');
               })
@@ -277,7 +264,7 @@ window.addEventListener('DOMContentLoaded', function() {
           .then(() => {
             btn.setAttribute('aria-pressed', 'true');
             btn.title = 'Pausar música';
-            btn.querySelector('span').textContent = '⏸';
+            btn.querySelector('span').innerHTML = '<i>⏸</i>';
             console.log('Audio reproduciendo');
           })
           .catch((error) => {
