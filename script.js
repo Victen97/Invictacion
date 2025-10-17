@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', function() {
   // Load sections dynamically
-  const sections = ['hero', 'info', 'timeline', 'memories', 'details', 'rsvp', 'location', 'countdown'];
+  const sections = ['hero', 'nueva', 'info', 'timeline', 'memories', 'details', 'rsvp', 'location', 'countdown'];
   sections.forEach(section => {
     fetch(`sections/${section}.html`)
       .then(response => response.text())
