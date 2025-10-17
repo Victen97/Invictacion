@@ -295,7 +295,7 @@
 
     /* NUEVA SECCIÓN */
     .nueva { 
-      padding: 80px 0; 
+      padding: 60px 0; 
       background: linear-gradient(135deg, #1a1004 0%, #d6911b 100%);
       overflow: hidden; 
       text-align: center;
@@ -305,7 +305,7 @@
       width: 60px;
       height: auto;
       margin-bottom: 30px;
-      filter: brightness(0) saturate(100%) invert(44%) sepia(82%) saturate(2034%) hue-rotate(12deg) brightness(95%) contrast(87%);
+      filter: brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(1068%) hue-rotate(314deg) brightness(95%) contrast(90%);
     }
     
     .nueva .section-title {
@@ -527,14 +527,14 @@
       text-align: center;
     }
     
-    .flip-text h4 {
+    .flip-text h4, .flip-text h5 {
       font-family: 'Great Vibes', cursive;
       font-size: 1.8rem;
       margin: 0 0 10px 0;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     
     .flip-text p {
+      font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem;
       line-height: 1.4;
       margin: 0;

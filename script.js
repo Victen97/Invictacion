@@ -152,33 +152,72 @@ window.addEventListener('DOMContentLoaded', function() {
   tick();
   setInterval(tick, 1000);
 
-  // Audio player (configura tu archivo MP3 o link externo)
-  const AUDIO_SRC = 'audio/photograph (piano instrumental).mp3'; // Para archivo MP3 local
-  const EXTERNAL_MUSIC_LINK = 'https://music.youtube.com/watch?v=TU_LINK_AQUI'; // Para link externo
+  // Audio player - Configuración mejorada
+  const AUDIO_SRC = 'audio/photograph.mp3'; // Nombre simplificado
+  const EXTERNAL_MUSIC_LINK = 'https://music.youtube.com/watch?v=TU_LINK_AQUI';
   
-  const audio = new Audio();
+  let audio = null;
+  let audioEnabled = false;
   const btn = document.getElementById('audioToggle');
   
-  if (AUDIO_SRC) {
-    // Modo archivo MP3
-    audio.src = AUDIO_SRC;
-    audio.preload = 'none';
+  // Función para habilitar audio después de interacción del usuario
+  function enableAudio() {
+    if (!audioEnabled && AUDIO_SRC) {
+      audio = new Audio(AUDIO_SRC);
+      audio.volume = 0.5;
+      audio.loop = true;
+      audio.preload = 'auto';
+      audioEnabled = true;
+      
+      // Remover listeners después de la primera interacción
+      document.removeEventListener('click', enableAudio);
+      document.removeEventListener('touchstart', enableAudio);
+      document.removeEventListener('keydown', enableAudio);
+      
+      console.log('Audio habilitado');
+    }
+  }
+  
+  // Agregar listeners para habilitar audio en primera interacción
+  document.addEventListener('click', enableAudio);
+  document.addEventListener('touchstart', enableAudio);
+  document.addEventListener('keydown', enableAudio);
+  
+  if (AUDIO_SRC && btn) {
     btn.hidden = false;
-    btn.addEventListener('click', async () => {
+    btn.setAttribute('aria-pressed', 'false');
+    btn.title = 'Reproducir música';
+    btn.querySelector('span').textContent = '♫';
+    
+    btn.addEventListener('click', () => {
+      // Asegurar que el audio esté habilitado
+      if (!audioEnabled) {
+        enableAudio();
+      }
+      
+      if (!audio) {
+        alert('Error: No se pudo cargar el archivo de audio.');
+        return;
+      }
+      
       if (audio.paused) {
-        try { 
-          await audio.play(); 
-          btn.setAttribute('aria-pressed','true'); 
-          btn.title = 'Pausar música'; 
-          btn.querySelector('span').textContent = '⏸'; 
-        } catch(e) { 
-          alert('El navegador bloqueó la reproducción automática. Toca de nuevo para reproducir.'); 
-        }
+        audio.play()
+          .then(() => {
+            btn.setAttribute('aria-pressed', 'true');
+            btn.title = 'Pausar música';
+            btn.querySelector('span').textContent = '⏸';
+            console.log('Audio reproduciendo');
+          })
+          .catch((error) => {
+            console.error('Error al reproducir:', error);
+            alert('No se pudo reproducir el audio. Verifica que el archivo "photograph (piano instrumental).mp3" esté en la carpeta "audio/".');
+          });
       } else {
-        audio.pause(); 
-        btn.setAttribute('aria-pressed','false'); 
-        btn.title = 'Reproducir música'; 
+        audio.pause();
+        btn.setAttribute('aria-pressed', 'false');
+        btn.title = 'Reproducir música';
         btn.querySelector('span').textContent = '♫';
+        console.log('Audio pausado');
       }
     });
   } else if (EXTERNAL_MUSIC_LINK) {
