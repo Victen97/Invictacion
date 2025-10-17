@@ -1,4 +1,20 @@
 window.addEventListener('DOMContentLoaded', function() {
+  // Loading screen functionality
+  const loadingScreen = document.getElementById('loadingScreen');
+  
+  // Hide loading screen after 3 seconds
+  setTimeout(function() {
+    if (loadingScreen) {
+      loadingScreen.classList.add('hide');
+      // Remove from DOM after transition completes
+      setTimeout(function() {
+        if (loadingScreen && loadingScreen.parentNode) {
+          loadingScreen.parentNode.removeChild(loadingScreen);
+        }
+      }, 800); // Match the CSS transition duration
+    }
+  }, 3000); // 3 seconds delay
+
   // Load sections dynamically
   const sections = ['hero', 'nueva', 'info', 'timeline', 'memories', 'details', 'rsvp', 'location', 'countdown'];
   sections.forEach(section => {
