@@ -1,4 +1,26 @@
 window.addEventListener('DOMContentLoaded', function() {
+  // Force light theme programmatically
+  function forceTheme() {
+    const meta = document.querySelector('meta[name="color-scheme"]');
+    if (meta) {
+      meta.setAttribute('content', 'light only');
+    }
+    
+    // Force CSS properties
+    document.documentElement.style.setProperty('color-scheme', 'light only', 'important');
+    document.body.style.setProperty('color-scheme', 'light only', 'important');
+    document.body.style.setProperty('background-color', '#faf7f5', 'important');
+  }
+  
+  // Apply immediately and on theme changes
+  forceTheme();
+  
+  // Listen for theme changes and force light theme
+  if (window.matchMedia) {
+    const darkThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    darkThemeQuery.addListener(forceTheme);
+  }
+  
   // Audio configuration - Moved to top for loading screen access
   const AUDIO_SRC = 'audio/photograph.mp3';
   

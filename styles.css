@@ -21,14 +21,52 @@
       /* Solo prevenir ajustes automáticos de color pero mantener estilos originales */
       -webkit-color-adjust: exact !important;
       print-color-adjust: exact !important;
+      color-scheme: light only !important;
     }
     
-    /* Prevenir filtros de inversión solo en casos extremos */
+    /* Force root to always use light theme */
+    :root {
+      color-scheme: light only !important;
+      supported-color-schemes: light only !important;
+    }
+    
+    /* Specific rules for mobile browsers */
+    @supports (-webkit-touch-callout: none) {
+      /* Safari mobile specific */
+      html, body {
+        -webkit-color-adjust: exact !important;
+        color-scheme: light only !important;
+      }
+    }
+    
+    /* Chrome mobile specific */
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+      html, body {
+        color-scheme: light only !important;
+      }
+    }
+    
+    /* Prevenir filtros de inversión en todos los casos EXCEPTO elementos con filtros personalizados */
     @media (prefers-color-scheme: dark) {
-      html {
-        /* Solo prevenir inversión automática, no afectar filtros CSS personalizados */
-        -webkit-filter: invert(0) !important;
-        filter: invert(0) !important;
+      html, body {
+        /* Solo aplicar a html y body, no a todos los elementos */
+        -webkit-filter: none !important;
+        filter: none !important;
+        color-scheme: light only !important;
+      }
+      
+      /* Mantener colores de fondo específicos */
+      body {
+        background-color: #faf7f5 !important;
+      }
+      
+      /* Preservar filtros personalizados específicos */
+      .cruz-imagen {
+        filter: brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(1068%) hue-rotate(314deg) brightness(95%) contrast(90%) !important;
+      }
+      
+      .timeline-icon {
+        filter: brightness(0) saturate(100%) invert(44%) sepia(52%) saturate(848%) hue-rotate(12deg) brightness(95%) contrast(87%) drop-shadow(0 2px 8px rgba(178,102,62,0.3)) !important;
       }
     }
 
@@ -49,6 +87,22 @@
     body, html {
       background-color: #faf7f5 !important;
       color: #0F2330 !important;
+    }
+    
+    /* NUCLEAR OPTION: Block all automatic theme changes BUT preserve custom filters */
+    * {
+      color-scheme: light only !important;
+    }
+    
+    *:not(.loading-screen):not(.desktop-message):not([class*="loading"]):not([class*="desktop"]):not(.cruz-imagen):not(.timeline-icon) {
+      -webkit-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    
+    /* Ensure custom filters are preserved */
+    .cruz-imagen, .timeline-icon {
+      -webkit-color-adjust: auto !important;
+      print-color-adjust: auto !important;
     }    /* DESKTOP MESSAGE - Show only on large screens */
     .desktop-message {
       display: none;
@@ -274,16 +328,44 @@
       }
     }
     
-    /* MOBILE BROWSER BASIC PREVENTION */
+    /* MOBILE BROWSER THEME BLOCKING */
     @media screen and (max-width: 768px) {
-      /* Solo prevenir ajustes automáticos básicos */
+      /* Prevenir ajustes automáticos en móviles */
       * {
         -webkit-text-size-adjust: 100% !important;
+        -webkit-color-adjust: exact !important;
+        color-scheme: light only !important;
       }
       
-      /* Mantener fondo del body */
-      body {
+      /* Forzar fondo en móviles */
+      html, body {
         background-color: #faf7f5 !important;
+        color-scheme: light only !important;
+      }
+      
+      /* Específico para navegadores nativos móviles */
+      html {
+        -webkit-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+    }
+    
+    /* Bloquear modo oscuro en navegadores nativos pero preservar filtros */
+    @media (prefers-color-scheme: dark) and (max-width: 768px) {
+      html, body {
+        background-color: #faf7f5 !important;
+        color: #0F2330 !important;
+        -webkit-filter: none !important;
+        filter: none !important;
+      }
+      
+      /* Restaurar filtros personalizados en móviles */
+      .cruz-imagen {
+        filter: brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(1068%) hue-rotate(314deg) brightness(95%) contrast(90%) !important;
+      }
+      
+      .timeline-icon {
+        filter: brightness(0) saturate(100%) invert(44%) sepia(52%) saturate(848%) hue-rotate(12deg) brightness(95%) contrast(87%) drop-shadow(0 2px 8px rgba(178,102,62,0.3)) !important;
       }
     }
 
