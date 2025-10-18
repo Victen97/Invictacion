@@ -181,7 +181,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #faf7f5 0%, #7B6362 100%);
+      background: #faf7f5;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -199,7 +199,7 @@
 
     .loading-content {
       text-align: center;
-      color: white;
+      color: var(--primary);
     }
 
     .loading-logo {
@@ -219,7 +219,7 @@
     .loading-subtitle {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1rem, 2vw, 1.4rem);
-      color: rgba(255,255,255,0.9);
+      color: var(--primary);
       margin: 0 0 40px 0;
       font-style: italic;
       animation: fadeInUp 1s ease-out 0.3s both;
@@ -398,7 +398,7 @@
         1px 1px 2px rgba(255, 255, 255, 0.8),
         0 4px 8px rgba(178,102,62,0.4),
         0 6px 12px rgba(0, 0, 0, 0.15);
-      letter-spacing: 2px;
+      letter-spacing: 0.5px;
       font-weight: 400;
     }
     
@@ -519,22 +519,24 @@
       margin-bottom: 10px;
     }
 
-    /* NUEVA SECCIÓN */
-    .nueva { 
+    /* VERSICULO SECCIÓN */
+    .versiculo { 
       padding: 60px 0; 
       background: #faf7f5;
       overflow: hidden; 
       text-align: center;
+      margin-top: -40px; /* Subir la sección completa */
     }
      
     .cruz-imagen {  
       width: 60px;
       height: auto;
       margin-bottom: 30px;
+      margin-top: -20px; /* Subir la cruz específicamente */
       filter: brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(1068%) hue-rotate(314deg) brightness(95%) contrast(90%);
     }
     
-    .nueva .section-title {
+    .versiculo .section-title {
       color: #fff;
     }
     
@@ -924,6 +926,33 @@
     .map-body { padding: 16px; }
     .map-title { margin: 0 0 6px; font-weight: 700; color: var(--primary); }
     .map-address { margin: 0 0 12px; color: var(--muted); }
+    
+    /* Map buttons styling */
+    .map-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    
+    .map-buttons .btn {
+      font-size: 0.9rem;
+      padding: 10px 15px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    
+    .btn-waze {
+      background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%) !important;
+      color: white !important;
+      border: none !important;
+    }
+    
+    .btn-waze:hover {
+      background: linear-gradient(135deg, #0099cc 0%, #007399 100%) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 153, 204, 0.3);
+    }
 
     /* COUNTDOWN */
     .countdown { 
@@ -1173,6 +1202,16 @@
        .details-grid { 
          grid-template-columns: 1fr; 
          gap: 15px;
+       }
+       
+       /* Map buttons mantienen 2 columnas en móvil */
+       .map-buttons {
+         gap: 8px;
+       }
+       
+       .map-buttons .btn {
+         font-size: 0.85rem;
+         padding: 8px 10px;
        }
        
        /* Details cards responsive */
