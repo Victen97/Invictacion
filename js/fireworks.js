@@ -188,12 +188,11 @@ function fireworksLoop() {
 	// increase the hue to get different colored fireworks over time
 	hue += 0.5;
 	
-	// normally, clearRect() would be used to clear the canvas
-	// we want to create a trailing effect though
-	// setting the composite operation to destination-out will allow us to clear the canvas at a specific opacity, rather than wiping it entirely
+	// Clear the canvas completely to eliminate trailing effect
+	// This will prevent any lingering traces or trails
 	fireworksCtx.globalCompositeOperation = 'destination-out';
-	// decrease the alpha property to create more prominent trails
-	fireworksCtx.fillStyle = 'rgba(0, 0, 0, 0.1)'; // Usar menor opacidad para fondo blanco
+	// Use higher opacity to clear more completely
+	fireworksCtx.fillStyle = 'rgba(0, 0, 0, 0.3)'; // Mayor opacidad para limpiar mejor
 	fireworksCtx.fillRect( 0, 0, cw, ch );
 	// change the composite operation back to our main mode
 	// lighter creates bright highlight points as the fireworks and particles overlap each other
@@ -211,6 +210,14 @@ function fireworksLoop() {
 	while( i-- ) {
 		particles[ i ].draw();
 		particles[ i ].update( i );
+	}
+	
+	// Additional cleanup when few particles remain to eliminate trails
+	if( particles.length < 5 && fireworks.length === 0 ) {
+		fireworksCtx.globalCompositeOperation = 'destination-out';
+		fireworksCtx.fillStyle = 'rgba(0, 0, 0, 0.8)'; // Limpieza más agresiva
+		fireworksCtx.fillRect( 0, 0, cw, ch );
+		fireworksCtx.globalCompositeOperation = 'lighter';
 	}
 	
 	// launch fireworks automatically to random coordinates
