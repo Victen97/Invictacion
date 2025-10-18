@@ -16,6 +16,131 @@
       color-scheme: light only;
     }
 
+    /* DESKTOP MESSAGE - Show only on large screens */
+    .desktop-message {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #f5d9a4 0%, #d2b066 100%);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark);
+    }
+
+    .desktop-content {
+      text-align: center;
+      max-width: 600px;
+      padding: 40px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .desktop-logo {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+      filter: 
+        sepia(100%) 
+        saturate(150%) 
+        hue-rotate(25deg) 
+        brightness(1.1) 
+        contrast(1.1);
+    }
+
+    .desktop-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: var(--primary);
+      margin: 0 0 10px 0;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .desktop-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--muted);
+      margin-bottom: 30px;
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+
+    .desktop-text {
+      margin-bottom: 30px;
+    }
+
+    .desktop-text p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--dark);
+      margin: 10px 0;
+    }
+
+    .desktop-qr {
+      border-top: 1px solid rgba(178,102,62,0.3);
+      padding-top: 20px;
+    }
+
+    .desktop-qr p {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 10px 0;
+    }
+
+    .qr-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qr-code {
+      width: 120px;
+      height: 120px;
+      background: var(--bg);
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: var(--primary);
+    }
+
+    .qr-url {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Mobile content - Show by default, hide on large screens */
+    .mobile-content {
+      display: block;
+    }
+
+    /* Media query for desktop - Show desktop message and hide mobile content */
+    @media (min-width: 1024px) {
+      .desktop-message {
+        display: flex;
+      }
+      
+      .mobile-content {
+        display: none;
+      }
+      
+      .loading-screen {
+        display: none;
+      }
+    }
+
     /* LOADING SCREEN */
     .loading-screen {
       position: fixed;
@@ -23,7 +148,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #f5d9a4 0%, #d2b066 100%);
+      background: linear-gradient(135deg, #faf7f5 0%, #7B6362 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -813,6 +938,15 @@
     .audio-toggle { position: fixed; right: 16px; bottom: 16px; width: 46px; height: 46px; border-radius: 50%; background: var(--primary); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 20px rgba(0,0,0,.15); cursor:pointer; border:none; z-index:2100; }
     .audio-toggle[aria-pressed="false"] { opacity:.9; }
     .audio-toggle:hover { filter: brightness(.96); }
+    
+    /* Ensure icons are white */
+    .audio-toggle span,
+    .audio-toggle i {
+      color: #fff !important;
+      font-style: normal;
+      font-size: 20px;
+      padding-bottom: 3px;
+    }
     
     /* Audio attention animation */
     .audio-toggle.pulse-attention {

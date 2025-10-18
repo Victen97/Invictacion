@@ -26,24 +26,37 @@ window.addEventListener('DOMContentLoaded', function() {
       
       // Mostrar tooltip temporal
       const tooltip = document.createElement('div');
-
+      tooltip.textContent = 'Haz clic para escuchar música';
+      tooltip.style.cssText = `
+        position: fixed;
+        right: 70px;
+        bottom: 30px;
+        background: #faf7f5;
+        color: #B2663E;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        z-index: 10000;
+        animation: fadeInOut 6s ease-in-out;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      `;
       
       document.body.appendChild(tooltip);
       
-      // Remover tooltip y animación después de 4 segundos
+      // Remover tooltip y animación después de 6 segundos
       setTimeout(() => {
         if (tooltip && tooltip.parentNode) {
           tooltip.parentNode.removeChild(tooltip);
         }
         btn.classList.remove('pulse-attention');
-      }, 4000);
+      }, 6000);
     }
   }
 
   // Loading screen functionality
   const loadingScreen = document.getElementById('loadingScreen');
   
-  // Hide loading screen after 3 seconds and start music
+  // Hide loading screen after 3 seconds and attempt auto-start music
   setTimeout(function() {
     if (loadingScreen) {
       loadingScreen.classList.add('hide');
@@ -64,13 +77,13 @@ window.addEventListener('DOMContentLoaded', function() {
                 if (btn) {
                   btn.setAttribute('aria-pressed', 'true');
                   btn.title = 'Pausar música';
-                  btn.querySelector('span').innerHTML = '<i class="fas fa-pause"></i>';
+                  btn.querySelector('span').textContent = '||';
                 }
                 console.log('Música iniciada automáticamente');
               })
               .catch((error) => {
                 console.log('Música no se puede iniciar automáticamente - Se requiere interacción del usuario');
-                // Mostrar el botón de audio parpadeando para llamar la atención
+                // Mostrar la notificación del botón de audio
                 showAudioNotification();
               });
           }
@@ -264,7 +277,7 @@ window.addEventListener('DOMContentLoaded', function() {
           .then(() => {
             btn.setAttribute('aria-pressed', 'true');
             btn.title = 'Pausar música';
-            btn.querySelector('span').innerHTML = '<i>⏸</i>';
+            btn.querySelector('span').textContent = '||';
             console.log('Audio reproduciendo');
           })
           .catch((error) => {
