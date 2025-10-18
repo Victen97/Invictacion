@@ -1,4 +1,4 @@
-:root {
+    :root {
       --primary: #B2663E; /* anaranjado otoñal (rust) */
       --accent: #5B7382;  /* azul pizarra desaturado */
       --dark: #0F2330;    /* azul muy oscuro de la paleta */
@@ -16,7 +16,40 @@
       color-scheme: light only;
     }
 
-    /* DESKTOP MESSAGE - Show only on large screens */
+    /* PREVENT BROWSER AUTO-ADJUSTMENTS */
+    html, body {
+      /* Solo prevenir ajustes automáticos de color pero mantener estilos originales */
+      -webkit-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    
+    /* Prevenir filtros de inversión solo en casos extremos */
+    @media (prefers-color-scheme: dark) {
+      html {
+        /* Solo prevenir inversión automática, no afectar filtros CSS personalizados */
+        -webkit-filter: invert(0) !important;
+        filter: invert(0) !important;
+      }
+    }
+
+    /* Force light theme on all elements */
+    html, body {
+      color-scheme: light only !important;
+      forced-color-adjust: none !important;
+    }
+
+    /* Prevent auto dark mode on inputs and form elements */
+    input, textarea, select, button {
+      color-scheme: light only !important;
+      -webkit-appearance: none !important;
+      appearance: none !important;
+    }
+
+    /* Force background colors on all sections */
+    body, html {
+      background-color: #faf7f5 !important;
+      color: #0F2330 !important;
+    }    /* DESKTOP MESSAGE - Show only on large screens */
     .desktop-message {
       display: none;
       position: fixed;
@@ -232,26 +265,25 @@
       color-scheme: light !important; /* Forzar tema claro en todos los elementos */
     }
     
-    /* Bloquear modo oscuro específicamente */
+    /* Prevenir modo oscuro automático solo en elementos básicos */
     @media (prefers-color-scheme: dark) {
       :root, html, body {
         color-scheme: light !important;
         background: var(--bg) !important;
         color: var(--dark) !important;
       }
-      
-      /* Forzar colores específicos en elementos principales */
-      .section-title, h1, h2, h3, h4, h5, h6 {
-        color: var(--primary) !important;
+    }
+    
+    /* MOBILE BROWSER BASIC PREVENTION */
+    @media screen and (max-width: 768px) {
+      /* Solo prevenir ajustes automáticos básicos */
+      * {
+        -webkit-text-size-adjust: 100% !important;
       }
       
-      p, span, div {
-        color: var(--dark) !important;
-      }
-      
-      /* Mantener fondos originales */
-      section, .container, .card {
-        background: inherit !important;
+      /* Mantener fondo del body */
+      body {
+        background-color: #faf7f5 !important;
       }
     }
 
@@ -490,7 +522,7 @@
     /* NUEVA SECCIÓN */
     .nueva { 
       padding: 60px 0; 
-      background: linear-gradient(135deg, #1a1004 0%, #d6911b 100%);
+      background: #faf7f5;
       overflow: hidden; 
       text-align: center;
     }
@@ -517,7 +549,7 @@
     /* TIMELINE - DISEÑO SIMPLE Y ELEGANTE */
     .timeline { 
       padding: 80px 0; 
-      background: linear-gradient(135deg, #1a1004 0%, #d6911b 100%);
+      background: #faf7f5;
       overflow: hidden;
     }
     .timeline .container {

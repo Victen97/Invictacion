@@ -282,8 +282,7 @@ window.addEventListener('DOMContentLoaded', function() {
           })
           .catch((error) => {
             console.error('Error al reproducir:', error);
-            alert('No se pudo reproducir el audio. Verifica que el archivo "photograph (piano instrumental).mp3" esté en la carpeta "audio/".');
-          });
+           });
       } else {
         audio.pause();
         btn.setAttribute('aria-pressed', 'false');
