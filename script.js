@@ -200,7 +200,7 @@ window.addEventListener('DOMContentLoaded', function() {
       const message = (form.message.value || '').trim();
 
       if (!guests || !names) {
-        alert('Por favor, completa los campos obligatorios (número de personas y nombres).');
+        showCustomAlert('Campos requeridos', 'Por favor, completa el número de personas y los nombres para continuar.', 'warning');
         return;
       }
 
@@ -355,7 +355,7 @@ window.addEventListener('DOMContentLoaded', function() {
     
     if (!ok) { 
       e.preventDefault(); 
-      alert('Por favor, completa los campos obligatorios.'); 
+      showCustomAlert('Campos requeridos', 'Por favor, completa todos los campos obligatorios para continuar.', 'warning');
       return; 
     }
 
@@ -423,17 +423,17 @@ window.addEventListener('DOMContentLoaded', function() {
       const name = guestNameInput.value.trim();
       
       if (!name) {
-        alert('Por favor ingresa un nombre');
+        showCustomAlert('Campo requerido', 'Por favor ingresa un nombre para continuar.', 'warning');
         return;
       }
 
       if (currentGuests.length >= maxGuests) {
-        alert(`Solo puedes agregar hasta ${maxGuests} invitado(s)`);
+        showCustomAlert('Límite alcanzado', `Solo puedes agregar hasta ${maxGuests} invitado(s).`, 'warning');
         return;
       }
 
       if (currentGuests.some(guest => guest.toLowerCase() === name.toLowerCase())) {
-        alert('Este nombre ya fue agregado');
+        showCustomAlert('Nombre duplicado', 'Este nombre ya fue agregado a la lista.', 'warning');
         return;
       }
 
@@ -497,7 +497,7 @@ window.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         if (currentGuests.length === 0) {
-          alert('Debes agregar al menos un invitado');
+          showCustomAlert('Lista vacía', 'Debes agregar al menos un invitado para continuar.', 'warning');
           return;
         }
 
@@ -610,5 +610,59 @@ window.addEventListener('DOMContentLoaded', function() {
         closeModal();
       }
     };
+  }
+  
+  // Función para mostrar modal de alerta personalizado
+  function showCustomAlert(title, message, type = 'info') {
+    // Crear el modal si no existe
+    let alertModal = document.getElementById('customAlertModal');
+    if (!alertModal) {
+      alertModal = document.createElement('div');
+      alertModal.id = 'customAlertModal';
+      alertModal.className = 'alert-modal';
+      document.body.appendChild(alertModal);
+    }
+    
+    // Iconos según el tipo
+    const icons = {
+      info: '💡',
+      warning: '⚠️',
+      error: '❌',
+      success: '✅'
+    };
+    
+    // Crear contenido del modal
+    alertModal.innerHTML = `
+      <div class="alert-modal-content">
+        <div class="alert-modal-icon ${type}">${icons[type] || icons.info}</div>
+        <h4>${title}</h4>
+        <p>${message}</p>
+        <button class="alert-modal-button" onclick="closeCustomAlert()">Entendido</button>
+      </div>
+    `;
+    
+    // Mostrar modal
+    alertModal.classList.add('show');
+    
+    // Función para cerrar (hacer accesible globalmente)
+    window.closeCustomAlert = () => {
+      alertModal.classList.remove('show');
+    };
+    
+    // Cerrar al hacer clic fuera del modal
+    alertModal.onclick = (e) => {
+      if (e.target === alertModal) {
+        window.closeCustomAlert();
+      }
+    };
+    
+    // Cerrar con Escape
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        window.closeCustomAlert();
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
   }
 });
