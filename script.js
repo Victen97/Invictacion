@@ -195,7 +195,6 @@ window.addEventListener('DOMContentLoaded', function() {
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      const whatsappNumber = form.dataset.whatsapp || '+50489564882';
       const guests = (form.guests.value || '').trim();
       const names = (form.names.value || '').trim();
       const message = (form.message.value || '').trim();
@@ -216,20 +215,8 @@ window.addEventListener('DOMContentLoaded', function() {
       
       whatsappMessage += `¡Nos emociona mucho celebrar con ustedes! 💕`;
 
-      // Codificar mensaje para URL
-      const encodedMessage = encodeURIComponent(whatsappMessage);
-      const whatsappUrl = `https://wa.me/${whatsappNumber.replace('+', '')}?text=${encodedMessage}`;
-      
-      // Abrir WhatsApp
-      window.open(whatsappUrl, '_blank');
-      
-      // Limpiar formulario
-      form.reset();
-      
-      // Remover clases de validación
-      form.querySelectorAll('.field').forEach(field => {
-        field.classList.remove('filled', 'invalid');
-      });
+      // Mostrar modal de selección de contacto
+      showContactModal(whatsappMessage, form);
     });
   }
 
@@ -372,7 +359,6 @@ window.addEventListener('DOMContentLoaded', function() {
       return; 
     }
 
-    const whatsappNumber = form.dataset.whatsapp || '+50498564882';
     const guests = (form.guests.value || '').trim();
     const names = (form.names.value || '').trim();
     const message = (form.message.value || '').trim();
@@ -388,20 +374,8 @@ window.addEventListener('DOMContentLoaded', function() {
     
     whatsappMessage += `¡Nos emociona mucho celebrar con ustedes! 💕`;
 
-    // Codificar mensaje para URL
-    const encodedMessage = encodeURIComponent(whatsappMessage);
-    const whatsappUrl = `https://wa.me/${whatsappNumber.replace('+', '')}?text=${encodedMessage}`;
-    
-    // Abrir WhatsApp
-    window.open(whatsappUrl, '_blank');
-    
-    // Limpiar formulario
-    form.reset();
-    
-    // Remover clases de validación
-    form.querySelectorAll('.field').forEach(field => {
-      field.classList.remove('invalid');
-    });
+    // Mostrar modal de selección de contacto
+    showContactModal(whatsappMessage, form);
   }, { capture: true });
 
   // Funcionalidad RSVP avanzada
@@ -527,7 +501,6 @@ window.addEventListener('DOMContentLoaded', function() {
           return;
         }
 
-        const whatsappNumber = this.dataset.whatsapp;
         const message = document.getElementById('message').value.trim();
         
         // Crear mensaje para WhatsApp
@@ -547,22 +520,95 @@ window.addEventListener('DOMContentLoaded', function() {
         
         whatsappMessage += `¡Nos emociona mucho celebrar con ustedes! 💕`;
 
-        // Codificar mensaje para URL
-        const encodedMessage = encodeURIComponent(whatsappMessage);
-        const whatsappUrl = `https://wa.me/${whatsappNumber.replace('+', '')}?text=${encodedMessage}`;
-        
-        // Abrir WhatsApp
-        window.open(whatsappUrl, '_blank');
-        
-        // Limpiar formulario
-        currentGuests = [];
-        updateGuestsTable();
-        updateAvailableGuests();
-        document.getElementById('message').value = '';
+        // Mostrar modal de selección de contacto
+        showContactModal(whatsappMessage, null, () => {
+          // Callback para limpiar formulario después del envío
+          currentGuests = [];
+          updateGuestsTable();
+          updateAvailableGuests();
+          document.getElementById('message').value = '';
+        });
       });
     }
 
     // Hacer removeGuest accesible globalmente
     window.removeGuest = removeGuest;
+  }
+  
+  // Función para mostrar modal de selección de contacto
+  function showContactModal(whatsappMessage, form, callback) {
+    // Crear el modal si no existe
+    let modal = document.getElementById('contactModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'contactModal';
+      modal.className = 'contact-modal';
+      modal.innerHTML = `
+        <div class="contact-modal-content">
+          <h3>¿A quién enviar?</h3>
+          <p>Selecciona a quién quieres enviar la confirmación:</p>
+          <div class="contact-options">
+            <button class="contact-option" data-number="+50489564882">
+               Victor Enamorado
+            </button>
+            <button class="contact-option" data-number="+50497544917">
+               Sidney Gómez
+            </button>
+          </div>
+          <button class="contact-cancel">Cancelar</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+    
+    // Mostrar modal
+    modal.classList.add('show');
+    
+    // Manejar clics en las opciones
+    const options = modal.querySelectorAll('.contact-option');
+    const cancelBtn = modal.querySelector('.contact-cancel');
+    
+    // Función para cerrar modal
+    const closeModal = () => {
+      modal.classList.remove('show');
+    };
+    
+    // Función para enviar mensaje
+    const sendMessage = (phoneNumber) => {
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodedMessage}`;
+      
+      // Abrir WhatsApp
+      window.open(whatsappUrl, '_blank');
+      
+      // Limpiar formulario si se proporcionó
+      if (form) {
+        form.reset();
+        form.querySelectorAll('.field').forEach(field => {
+          field.classList.remove('filled', 'invalid');
+        });
+      }
+      
+      // Ejecutar callback si se proporcionó
+      if (callback) {
+        callback();
+      }
+      
+      closeModal();
+    };
+    
+    // Event listeners
+    options.forEach(option => {
+      option.onclick = () => sendMessage(option.dataset.number);
+    });
+    
+    cancelBtn.onclick = closeModal;
+    
+    // Cerrar al hacer clic fuera del modal
+    modal.onclick = (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    };
   }
 });

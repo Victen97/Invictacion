@@ -845,7 +845,7 @@
     }
     
     .flip-text h4, .flip-text h5 {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Great Vibes';
       font-size: 1.8rem;
       margin: 0 0 10px 0;
     }
@@ -1671,4 +1671,98 @@
         padding: 4px 8px;
         font-size: 0.75rem;
       }
+    }
+    
+    /* MODAL DE SELECCIÓN DE CONTACTO */
+    .contact-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .contact-modal.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .contact-modal-content {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideIn 0.3s ease;
+    }
+    
+    .contact-modal h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: var(--primary);
+      margin: 0 0 20px 0;
+    }
+    
+    .contact-modal p {
+      color: var(--dark);
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+    
+    .contact-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .contact-option {
+      background: linear-gradient(135deg, var(--primary) 0%, #D2A566 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .contact-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(178, 102, 62, 0.4);
+    }
+    
+    .contact-cancel {
+      background: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    
+    .contact-cancel:hover {
+      background: #5a6268;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
