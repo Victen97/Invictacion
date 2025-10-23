@@ -721,6 +721,8 @@
       z-index: 5;
       pointer-events: none;
       opacity: 1;
+      /* aumentar tamaño */
+      background-size: 130% auto;
     }
 
     /* Imagen de corte de papel en la parte inferior */
