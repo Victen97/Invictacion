@@ -14,7 +14,7 @@ window.requestAnimFrame = (function(){
 // Variables para optimización
 var canvas, ctx, height, width, collection = [];
 var groundLeaves = []; // Array para hojas en el suelo
-var num_drops = 30; // Reducido aún más para mejor rendimiento
+var num_drops = 20; // Reducido aún más para mejor rendimiento
 var leafCache = null; // Cache para la forma de la hoja
 var leafColors = ['#A0521D', '#FF9933', '#E85C1A', '#8B2C00', '#5C2E00']; // Colores más saturados
 var gravity = 1;
